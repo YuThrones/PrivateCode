@@ -1,4 +1,4 @@
-很简单粗暴，规律就是拿n-1作为N的输入，然后生成N的排列，一个存储表加递归生成搞定
+# 很简单粗暴，规律就是拿n-1作为N的输入，然后生成N的排列，一个存储表加递归生成搞定
 class Solution:
     record = {}
     def countAndSay(self, n: int) -> str:
