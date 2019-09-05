@@ -1,4 +1,6 @@
 # 思路是比较简单的，模拟他的前进轨迹，判断好边界条件即可
+# 看了下答案，这个写法还可以优化，把从(r1,c1)到(r1,c2)封装成函数，并且方向用数组表示，可以省略很大一部分代码
+
 class Solution:
     def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
         row_len = len(matrix)
