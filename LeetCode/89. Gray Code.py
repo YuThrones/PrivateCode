@@ -11,3 +11,20 @@ class Solution:
         for index in range(length - 1, -1, -1):
             sub.append(ext+sub[index])
         return sub
+
+# 看了下其他人的解法，非常的简单，可以直接把一个数的普通二进制表示变成GrayCode
+# 只需要 (num >> 1) ^ num即可，也就是右移一位然后与自己做异或，这个思路其实挺难理解的
+# 我画了尝试了几个数，大概的原理应该是，通过相邻位的异或，来排除进位同时对多个位置的变化影响
+# 比如1101,1110这两个二进制表示的数，用这种方法算出来的GrayCode是1011和1001，可以看到，只有进位终止的那一位发生了变化
+# 再极端一点的，01111，10000这两个二进制表示的数，对应的GrayCode分别是01000,11000，也是只有进位终止那一位发生了变化
+# 原理就是进位时连续一段数字都会从0、1变成1、0，所以相邻异或是一样的
+# 至于GrayCode转换成二进制数字，则比较麻烦，下面是网上贴出的Java函数，思路其实就是根据第一位的数字，然后利用相邻两位的异或，逐位还原结果
+unsigned int grayToBinary(unsigned int num)
+{
+    unsigned int mask;
+    for (mask = num >> 1; mask != 0; mask = mask >> 1)
+    {
+        num = num ^ mask;
+    }
+    return num;
+}
