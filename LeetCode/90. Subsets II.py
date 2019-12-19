@@ -21,3 +21,30 @@ class Solution:
                 repeat.add(tuple(new_list))
                 result.append(new_list)
         return result
+
+class Solution:
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        numlist = []
+        last = None
+        for num in nums:
+            if (num != last):
+                numlist.append({"num":num, "count":0})
+                last = num
+            numlist[-1]["count"] += 1
+        # print (numlist)
+        return self.search(numlist)
+                
+        
+    def search(self, numlist):
+        length = len(numlist)
+        if (length == 0):
+            return [[]]
+        sub = self.search(numlist[1:])
+        num = numlist[0]["num"]
+        count = numlist[0]["count"]
+        for index in range(len(sub)):
+            for i in range(count):
+                sub.append([num] * (i + 1) + sub[index])
+        return sub
+                
