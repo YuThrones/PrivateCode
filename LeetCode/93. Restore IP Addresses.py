@@ -21,13 +21,13 @@ class Solution:
                         subresult = cal(sub[i:], num - 1)
                 elif (i == 2):
                     if (ints >= 10 and ints <= 99):
-                        subresult = cal(sub[i:], num - 1)
+                        subresult = cal(sub[i:], num - 1) 
                 elif (i == 3):
                     if (ints >= 100 and ints <= 255):
                         subresult = cal(sub[i:], num - 1)
                 for sr in subresult:
                     result.append([s] + sr)
-            return result
+            return result  
         totalresult = []
         for tr in cal(s, 4):
             # print ("结果", tr)
