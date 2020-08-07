@@ -27,3 +27,37 @@ class Solution:
         return root
 
         
+# 改用索引之后速度提高了一倍左右，但是还是不够快
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        length = len(preorder)
+        return self.build(preorder, inorder, 0, length, 0, length)
+    
+    def build(self, preorder, inorder, pre_start, pre_end, in_start, in_end):
+        if (pre_end == pre_start):
+            return None
+        
+        rootval = preorder[pre_start]
+        root = TreeNode(rootval)
+        
+        left_count = 0
+        for index in range(in_start, in_end):
+            if (inorder[index] == rootval):
+                break
+            left_count = left_count + 1
+        
+        root.left = self.build(preorder, inorder, 
+                                   pre_start + 1, 
+                                   pre_start + 1 + left_count, 
+                                   in_start, 
+                                   in_start + left_count)
+        
+        root.right = self.build(preorder, inorder,
+                                    pre_start + 1 + left_count, 
+                                    pre_end, 
+                                    in_start + 1 + left_count, 
+                                    in_end)
+        return root
+        
+
+        
