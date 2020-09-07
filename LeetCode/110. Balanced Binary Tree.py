@@ -23,4 +23,4 @@ class Solution:
             return -1
         if (abs(leftdepth - rightdepth) > 1):
             return -1
-        return max(leftdepth, rightdepth) + 1
+        return max(leftdepth, rightdepth) + 1 
