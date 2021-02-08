@@ -35,3 +35,40 @@ class Solution:
                 black_set.add(try_word)
         
         return 0
+
+
+# 也是跟126一样，使用两边往中间搜索的方式来降低复杂度，只是不需要再记录父节点，更加简单
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        wordSet = set(wordList)
+
+        if endWord not in wordSet:
+            return 0
+        
+        beginSet = {beginWord}
+        endSet = {endWord}
+
+        lv=1
+
+        while beginSet:
+            wordSet -= beginSet
+            lv+=1
+            t=set()
+
+            for w in beginSet:
+                for i in range(len(w)):
+                    l=w[:i]
+                    r=w[i+1:]
+                    
+                    for c in string.ascii_lowercase:
+                        n = l+c+r
+                        
+                        if n in wordSet:
+                            if n in endSet:
+                                return lv
+                            else:
+                                t.add(n)
+            beginSet=t
+            if len(beginSet)>len(endSet):
+                endSet,beginSet = beginSet,endSet
+        return 0
