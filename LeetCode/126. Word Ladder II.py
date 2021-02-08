@@ -78,3 +78,42 @@ class Solution:
                 sub.append(endWord)
                 res.append(sub)
         return res
+
+
+# 看到的最快的Submissions，稍微难理解一点，做法是从beginWord和endWord两端往中间搜索，一旦找到两个搜索集合的交集，就认为已经找到最短的路径，然后计算路径
+# 最后的运行速度快了一个数量级，以后可以借鉴下
+from collections import defaultdict, deque
+class Solution:
+    def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) -> List[List[str]]:
+        s = set(wordList)
+        if endWord not in s: 
+            return []
+        
+        forward, backward = {beginWord}, {endWord} 
+        direc, parents = 1, defaultdict(set)
+        
+        while forward and backward: 
+            if len(forward) > len(backward): 
+                forward, backward = backward, forward 
+                direc *= -1 
+            s -= forward 
+            next_forward = set()
+            
+            for word in forward: 
+                for i in range(len(word)): 
+                    p1, p2 = word[:i], word[i+1:]
+                    for c in string.ascii_lowercase: 
+                        t = p1 + c + p2
+                        if t in s: 
+                            next_forward.add(t)
+                            if direc == 1: 
+                                parents[t].add(word)
+                            else: 
+                                parents[word].add(t)
+            if backward & next_forward: 
+                res = [[endWord]]
+                while res[0][0] != beginWord: 
+                    res = [[p]+r for r in res for p in parents[r[0]]]
+                return res
+            forward = next_forward
+        return []
