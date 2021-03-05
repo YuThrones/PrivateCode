@@ -59,3 +59,28 @@ class Solution:
         if split_str in input_str:
             raise Exception
         return '#' + split_str.join(list(input_str)) + '#'
+
+# 看了下最快的解法，思路差不多，不过他是直接把每个回文数的终点对应的字符串都记录下来，然后再从前往后遍历
+# 这种做法两个循环都是O(n²)的，比我的做法快一点，不过基本在一个数量级，但是胜在更容易理解一点，不需要去看Manacher算法。
+
+from collections import defaultdict
+
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        palindromes = defaultdict(list)
+        for i in range(len(s)):
+            c = 0
+            while i - c >= 0 and i + c < len(s) and s[i-c] == s[i+c]:
+                palindromes[i+c].append(s[i-c:i+c+1])
+                c += 1
+        for i in range(len(s) - 1):
+            c = 0
+            while i - c >= 0 and i + 1 + c < len(s) and s[i-c] == s[i+1+c]:
+                palindromes[i+1+c].append(s[i-c:i+c+2])
+                c += 1
+        dp = [[] for _ in range(len(s)+1)]
+        dp[0].append([])
+        for i in range(1, len(s) + 1):
+            for palindrome in palindromes[i-1]:
+                dp[i].extend(x + [palindrome] for x in dp[i-len(palindrome)])
+        return dp[-1]
