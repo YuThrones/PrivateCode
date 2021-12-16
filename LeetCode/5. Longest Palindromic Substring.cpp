@@ -65,6 +65,29 @@ public:
     }
 };
 
+// 这是在leetcode上面最快的算法，但是看思路感觉是一种黑科技的优化，应该是针对一整片重复字母的case能取得比较好的效果，大量不重复的字母，这个case猜测优化效果优先，后面跑一下试试
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        if (s.size() < 2) return s;
+        int n = s.size(), maxLen = 0, start = 0;
+        for (int i = 0; i < n;) {
+            if (n - i <= maxLen / 2) break;
+            int left = i, right = i;
+            while (right < n - 1 && s[right + 1] == s[right]) ++right;
+            i = right + 1;
+            while (right < n - 1 && left > 0 && s[right + 1] == s[left - 1]) {
+                ++right; --left;
+            }
+            if (maxLen < right - left + 1) {
+                maxLen = right - left + 1;
+                start = left;
+            }
+        }
+        return s.substr(start, maxLen);
+    }
+};
+
 int main() {
     Solution s = Solution();
     string res = s.longestPalindrome("babad");
