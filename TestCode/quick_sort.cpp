@@ -12,7 +12,7 @@ int* GenRandomArray(int size) {
     int* array = new int[size];
     for (int i = 0; i < size; ++i) {
         array[i] = rand();
-        // array[i] = RandIntRange(1, 101);
+        // array[i] = RandIntRange(1, 10);
     }
     return array;
 }
@@ -34,11 +34,12 @@ void Swap(int array[], int x, int y) {
 void Partition(int array[], int start, int end, int* res) {
     int left = start - 1;
     int right = end;
-    int mid = RandIntRange(start, end);
-    Swap(array, start, mid);
+
+    int rand_index = RandIntRange(start, end);
+    int part = array[rand_index];
+    Swap(array, start, rand_index);
+
     int index = start;
-    
-    int part = array[start];
     while (index < right && left < right) {
         if (array[index] > part) {
             Swap(array, index, --right);
@@ -60,18 +61,36 @@ void QuickSort(int array[], int start, int end) {
         return;
     }
     int* mid = new int[2];
+    // std::cout << "\nstart sort " << start << " " << end << std::endl;
+    // PrintArray(array, 0, end);
     Partition(array, start, end, mid);
+    // std::cout << "sort " << start << " " << mid[0] << " " << mid[1] << " " << end << std::endl;
+    // PrintArray(array, 0, end);
     QuickSort(array, start, mid[0] + 1);
     QuickSort(array, mid[1], end);
 }
 
+void CheckArraySort(int array[], int start, int end) {
+    for (int i = start; i < end - 1; ++i) {
+        if (array[i] > array[i + 1]) {
+            std::cout << "Wrong" << std::endl;
+            return;
+        }
+    }
+    // std::cout << "Right" << std::endl;
+}
+
 int main() {
     srand(time(NULL));
-    int size = 10000;
-    int* array = GenRandomArray(size);
-    PrintArray(array, 0, size);
-    QuickSort(array, 0, size);
-    std::cout << "res ";
-    PrintArray(array, 0, size);
+
+    for (int i = 0; i < 10000; ++ i) {
+        int size = 100000;
+        int* array = GenRandomArray(size);
+        // PrintArray(array, 0, size);
+        QuickSort(array, 0, size);
+        // PrintArray(array, 0, size);
+        CheckArraySort(array, 0, size);
+    }
+    std::cout << "end" << std::endl;
     return 0;
 }
