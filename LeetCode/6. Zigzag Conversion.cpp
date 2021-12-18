@@ -1,3 +1,24 @@
+// 又看了下最佳解法，我想的过于复杂了，按行来，然后算出每一行的所有字符在原字符串的位置然后加起来就行，可以建方程式来计算坐标，再化简就好。
+class Solution {
+public:
+    string convert(string s, int numRows) {
+        if (numRows == 1) {
+            return s;
+        }
+        string res = "";
+        int cycle = numRows * 2 - 2;
+        for (int i = 0; i < numRows; ++i) {
+            for (int j = i; j < s.length(); j += cycle) {
+                res += s.at(j);
+                if (i > 0 && i < numRows - 1 && cycle - 2 * i + j < s.length()) {
+                    res += s.at(cycle - 2 * i + j);
+                }
+            }
+        }
+        return res;
+    }
+};
+
 // 比较简单的逻辑题，能够根据每一个数的index算出他在哪一行，每 numRows * 2 - 2 为一次循环
 // 只需要求余就能知道应该在哪一行，然后计算相应在新字符串的偏移，代码应该可以简化
 class Solution {
