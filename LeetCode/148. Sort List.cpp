@@ -1,3 +1,4 @@
+// 归并排序对链表应该是比较合适的，无须担心额外空间的问题，快排有没有可能更快需要试试
 #include<iostream>
 #include<random>
 #include<time.h>
