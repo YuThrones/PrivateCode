@@ -51,3 +51,30 @@ public:
         return curA;
     }
 };
+
+
+// 这个是leetcode上面看到其他人的解法，有点狠，两个链表从头遍历，一旦为空设为另一条链表的头，这样相遇的时候要么都没走完一条链表，也就是头结点到交点距离相同
+// 要么都走完了一条链表，都走了一次相交前的长度，只能说这解法很骚。
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        ListNode* dA=headA;
+        ListNode* dB=headB;
+        while(dA!=dB){
+            if(!dA){
+               dA=headB; 
+            }
+            else{
+                dA=dA->next;
+            }
+            if(!dB){
+                dB=headA;
+            }
+            else{
+                dB=dB->next;
+            }
+            
+        }
+        return dA;
+    }
+};
