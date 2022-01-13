@@ -26,7 +26,7 @@ vector<int> getNext(string p) {
 int getFindIndex(string s, string p) {
     int i = 0, j = 0;
     vector<int> next = getNext(p);
-    string common = "";
+    // string common = "";
     // length返回的是非负数，如果跟负数做比较会溢出，需要转一下
     int sizeS = s.length();
     int sizeP = p.length();
@@ -34,9 +34,9 @@ int getFindIndex(string s, string p) {
         if (j == -1 || s[i] == p[j]) {
             ++i;
             ++j;
-            if (j > common.length()) {
-                common = p.substr(0, j);
-            }
+            // if (j > common.length()) {
+            //     common = p.substr(0, j);
+            // }
         }
         else {
             j = next[j];
