@@ -1,5 +1,5 @@
 // 经典固定长度堆解决的问题，最大的数放堆顶，只有数量不足或者比堆顶小才放入，返回堆顶即可
-
+// 看了下最快解法是用的快排的partition，确实也是一个解法
 class Solution {
 public:
     int kthSmallest(vector<vector<int>>& matrix, int k) {
