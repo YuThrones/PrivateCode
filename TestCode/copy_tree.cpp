@@ -76,31 +76,3 @@ int main() {
     Print(newHead);
     return 0;
 }
-
-inorder(node) {
-    if (node == nullptr) {
-        return node;
-    }
-    inorder(node->left);
-    dosomething()
-    inorder(node->right);
-}
-
-queue q;
-while(cur) {
-
-}
-
-stack s;
-while(cur && !s.empty()) {
-    if (!cur) {
-        cur = s.top();
-        s.pop();
-        print cur.val;
-        cur = cur->right;
-    }
-    else {
-        s.push(cur);
-        cur = cur->left;
-    }
-}
