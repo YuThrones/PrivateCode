@@ -58,19 +58,8 @@ vector<int> PreOrder(TreeNode* head) {
     if (!head) {
         return res;
     }
-    // cout << "PrePrint" << endl;
-    // st.push(head);
-    while(!st.empty() || head) {
-        // TreeNode* temp = st.top();
-        // st.pop();
-        // cout << temp->value << " ";
-        // if (temp->right) {
-        //     st.push(temp->right);
-        // }
 
-        // if (temp->left) {
-        //     st.push(temp->left);
-        // }
+    while(!st.empty() || head) {
         if (head) {
             res.push_back(head->value);
             st.push(head);
@@ -83,7 +72,6 @@ vector<int> PreOrder(TreeNode* head) {
             st.pop();
         }
     }
-    // cout << endl;
     return res;
 }
 
