@@ -2,7 +2,7 @@
 #include <random>
 #include <unordered_map>
 #include <string>
-#include <queue>
+#include <vector>
 
 using namespace std;
 
@@ -295,6 +295,28 @@ public:
 
         return cur->next[0];
     }
+
+    vector<SkipListNode*> findRangeNode(double maxScore, double minScore)
+    {
+        vector<SkipListNode*> res;
+
+        if (maxScore <= minScore) return res;
+
+        SkipListNode* maxNode = findFirstGreaterNode(maxScore);
+        if (!maxNode) maxNode = head;;
+
+        SkipListNode* minNode = findFirstGreaterNode(maxScore);
+        if (!maxNode) minNode = head;
+
+        SkipListNode* temp = maxNode->next[0];
+        while(temp && temp != minNode)
+        {
+            res.push_back(temp);
+            temp = temp->next[0];
+        }
+
+        return res;
+    }
 };
 
 
@@ -309,13 +331,16 @@ int main()
         // cout << "deal" << i << endl;
         slist.addNode(to_string(rand()), rand());
         slist.removeNode(to_string(rand()));
-        int r = rand();
-        SkipListNode* temp = slist.findFirstGreaterNode(r);
-        if (temp && temp->score <= r) 
-            cout << "error1" << endl;
-        temp = slist.findFirstLessNode(r);
-        if (temp && temp->score >= r) 
-            cout << "error2" << endl;
+        // int r = rand();
+        // SkipListNode* temp = slist.findFirstGreaterNode(r);
+        // if (temp && temp->score <= r) 
+        //     cout << "error1" << endl;
+        // temp = slist.findFirstLessNode(r);
+        // if (temp && temp->score >= r) 
+        //     cout << "error2" << endl;
+        int r1 = rand(), r2 = rand();
+        auto res = slist.findRangeNode(r1, r2);
+
         slist.valid();
     }
 
