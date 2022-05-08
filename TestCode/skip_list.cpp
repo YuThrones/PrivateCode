@@ -301,7 +301,7 @@ public:
         // 找到闭区间内的节点
         vector<SkipListNode*> res;
 
-        if (maxScore <= minScore) return res;
+        if (maxScore < minScore) return res;
 
         SkipListNode* maxNode = findFirstGreaterNode(maxScore);
         if (!maxNode) maxNode = head;;
