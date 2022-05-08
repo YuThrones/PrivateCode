@@ -1,10 +1,10 @@
-#include <iostream>
-#include <random>
-#include <unordered_map>
-#include <string>
 #include <vector>
-
+#include <climits>
+#include <iostream>
+#include <queue>
+#include <unordered_map>
 using namespace std;
+
 
 
 const int SKIP_NODE_HEIGHT = 32;
@@ -14,8 +14,8 @@ class SkipListNode
 public:
     SkipListNode* next[SKIP_NODE_HEIGHT + 1];
     int height = 0;
-    double score = 0;
-    string key;
+    int score = 0;
+    int key;
     int nextDis[SKIP_NODE_HEIGHT + 1];
 
     SkipListNode()
@@ -46,7 +46,7 @@ public:
 class SkipList 
 {
 public:
-    unordered_map<string, SkipListNode*> my_dict;
+    unordered_map<int, SkipListNode*> my_dict;
     SkipListNode* head = nullptr;
     SkipList()
     {
@@ -54,7 +54,7 @@ public:
         head->height = SKIP_NODE_HEIGHT;
     }
 
-    bool addNode(string key, double score)
+    bool addNode(int key, int score)
     {
         SkipListNode* temp;
         if (my_dict.find(key) != my_dict.end())
@@ -138,7 +138,7 @@ public:
         return true;
     }
 
-    bool removeNode(string key)
+    bool removeNode(int key)
     {
         if (my_dict.find(key) == my_dict.end())
         {
@@ -246,7 +246,7 @@ public:
         return true;
     }
 
-    SkipListNode* findFirstGreaterNode(double score)
+    SkipListNode* findFirstGreaterNode(int score)
     {
         // 获取第一个分数大于给定score的节点
         SkipListNode* cur = head;
@@ -272,7 +272,7 @@ public:
         return cur;
     }
 
-    SkipListNode* findFirstLessNode(double score)
+    SkipListNode* findFirstLessNode(int score)
     {
         // 获取第一个分数小于给定score的节点
         SkipListNode* cur = head;
@@ -296,8 +296,9 @@ public:
         return cur->next[0];
     }
 
-    vector<SkipListNode*> findRangeNode(double maxScore, double minScore)
+    vector<SkipListNode*> findRangeNode(int maxScore, int minScore)
     {
+        // 找到闭区间内的节点
         vector<SkipListNode*> res;
 
         if (maxScore <= minScore) return res;
@@ -305,8 +306,7 @@ public:
         SkipListNode* maxNode = findFirstGreaterNode(maxScore);
         if (!maxNode) maxNode = head;;
 
-        SkipListNode* minNode = findFirstGreaterNode(maxScore);
-        if (!maxNode) minNode = head;
+        SkipListNode* minNode = findFirstLessNode(minScore);
 
         SkipListNode* temp = maxNode->next[0];
         while(temp && temp != minNode)
@@ -318,33 +318,3 @@ public:
         return res;
     }
 };
-
-
-int main()
-{
-    SkipList slist = SkipList();
-
-    const int count = 50000;
-
-    for (int i = 0; i < count; ++i) 
-    {
-        // cout << "deal" << i << endl;
-        slist.addNode(to_string(rand()), rand());
-        slist.removeNode(to_string(rand()));
-        // int r = rand();
-        // SkipListNode* temp = slist.findFirstGreaterNode(r);
-        // if (temp && temp->score <= r) 
-        //     cout << "error1" << endl;
-        // temp = slist.findFirstLessNode(r);
-        // if (temp && temp->score >= r) 
-        //     cout << "error2" << endl;
-        int r1 = rand(), r2 = rand();
-        auto res = slist.findRangeNode(r1, r2);
-
-        slist.valid();
-    }
-
-    // slist.print();
-    cout << slist.valid();
-    return 0;
-}
