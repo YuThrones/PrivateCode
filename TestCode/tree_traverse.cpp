@@ -109,6 +109,7 @@ vector<int> InOrder(TreeNode* head) {
 
 
 vector<int> PostOrder(TreeNode* head) {
+    // 遍历顺序是左右中，反过来就是中右左，可以用先序遍历的代码改一下得到中右左的顺序，然后逆序即可
     stack<TreeNode*> st;
     stack<TreeNode*> st2;
     vector<int> res;
