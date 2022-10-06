@@ -59,6 +59,58 @@ public:
     }
 };
 
+class Solution {
+public:
+    
+    bool solve(vector<int> &v,int m,int sum,int &ans)
+    {
+        int n=v.size();
+        int cnt =1;
+        int s=0;
+        for(int i=0; i<n; i++)
+        {
+            if(s+v[i]>sum)
+            {
+                cnt++;
+                s=v[i];
+            }
+            else
+                s+=v[i];
+        }
+        
+        if(cnt>m)
+        return false;
+        else
+        {
+            ans = sum;
+            return true;
+        }
+    }
+    
+    int splitArray(vector<int>& v, int m) {
+        int l=INT_MIN,r=0;
+        for(auto &g : v)
+        {
+            l=max(l,g);
+            r+=g;
+        }
+        int ans=-1;
+        while(l<=r)
+        {
+            int mid = (l+r)/2;
+            if(solve(v,m,mid,ans))
+            {
+                r=mid-1;
+            }
+            else
+            {
+                l=mid+1;
+            }
+        }
+        return ans;
+    }
+};
+
 int main() {
     Solution solution;
     vector<int> nums{7,2,5,10,8};
