@@ -34,19 +34,7 @@ public:
 
         // 奇数的话往最近的2的n次方走
 
-        int ori = n;
-        // n |= n >> 1;
-        // n |= n >> 2;
-        // n |= n >> 4;
-        // n |= n >> 8;
-        // n |= n >> 16;
-        // n += 1; //大于N的最小的2的N次方
-        // int small = n >> 1; //小于N的最大的2的N次方
-        // int big = n;
-        
-        // int choose = (big - ori) * 2 >= (ori - small) ? ori - 1 : ori + 1;
-        int choose = (ori - 1) / 2 % 2 == 0 ? ori - 1 : ori + 1;
-        // cout << choose << endl;
+        int choose = (n - 1) / 2 % 2 == 0 ? n - 1 : n + 1;
         return integerReplacement(choose) + 1;
     }
 
@@ -62,13 +50,6 @@ public:
 
         int res1 = integerReplacement2(n + 1);
         int res2 = integerReplacement2(n - 1);
-        // if (res1 < res2) {
-        //     cout << n + 1 << endl;
-        // }
-        // else {
-        //     cout << n - 1 << endl;
-        // }
-
         return min(res1, res2) + 1;
     }
     
@@ -76,12 +57,6 @@ public:
 
 int main() {
     Solution sol;
-    // cout << sol.integerReplacement(1234) << endl;
-    // cout << "=================" << endl;
-    // cout << sol.integerReplacement(23) << endl;
-    // cout << "=================" << endl;
-    // cout << sol.integerReplacement2(23) << endl;
-    // cout << "=================" << endl;
 
     for (int i = 1; i < 10001; ++i) {
         if (sol.integerReplacement(i) != sol.integerReplacement2(i)) {
@@ -89,6 +64,5 @@ int main() {
             break;
         }
     }
-    // cout << sol.integerReplacement(200000000) << endl;
     return 0;
 }
