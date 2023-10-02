@@ -1,4 +1,5 @@
 // 一开始还想着辗转相除法，后面想了下其实按字节扫描才是正道
+// 看了下其他人答案，居然选择直接转unsigned_int然后当正数处理，好像也是一个办法
 
 #include <string>
 #include <iostream>
