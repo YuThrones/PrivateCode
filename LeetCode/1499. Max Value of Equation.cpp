@@ -5,7 +5,7 @@
 #include<limits.h>
 using namespace std;
 
-#define MAIN_MAX  10
+#define MAIN_MAX  100001
 
 class Solution {
 public:
