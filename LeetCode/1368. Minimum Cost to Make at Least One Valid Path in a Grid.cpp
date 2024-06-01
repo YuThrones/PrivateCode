@@ -22,6 +22,9 @@ public:
             int x = dq.front().first;
             int y = dq.front().second;
             dq.pop_front();
+
+            if (x == m - 1 && y == n - 1) return distance[x][y];
+
             for (int i = 1; i < 5; ++i) {
                 int nx = x + dir[i][0];
                 int ny = y + dir[i][1];
