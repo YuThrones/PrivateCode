@@ -16,9 +16,9 @@ class Solution {
 public:
     int minimumObstacles(vector<vector<int>>& grid) {
         int dir[]{-1, 0, 1, 0, -1};
-        int n = grid.size();
-        int m = grid[0].size();
-        int distance[n][m];
+        int m = grid.size();
+        int n = grid[0].size();
+        int distance[m][n];
         memset(distance, 0x3f, sizeof(distance));
         distance[0][0] = 0;
         deque<pair<int, int>> dq;
@@ -27,23 +27,26 @@ public:
             int x = dq.front().first;
             int y = dq.front().second;
             dq.pop_front();
+
+            if (x == m - 1 && y == n - 1) return distance[x][y];
+
             for (int i = 0; i < 4; ++i) {
                 int nx = x + dir[i];
                 int ny = y + dir[i + 1];
-                if (nx < 0 || ny < 0 || nx >=n || ny >= m) continue;
+                if (nx < 0 || ny < 0 || nx >=m || ny >= n) continue;
 
                 if (distance[nx][ny] > grid[nx][ny] + distance[x][y]) {
+                    distance[nx][ny] = distance[x][y] + grid[nx][ny];
                     if (grid[nx][y] == 0) {
                         dq.push_front({nx, ny});
                     }
                     else {
                         dq.push_back({nx, ny});
                     }
-                    distance[nx][ny] = distance[x][y] + grid[nx][ny];
                 }
             }
         }
-        return distance[n - 1][m - 1];
+        return distance[m - 1][n - 1];
     }
 };
 
