@@ -67,3 +67,27 @@ public:
         return count;
     }
 };
+// 经过递归改动态规划，剪枝，空间压缩后的最优版本
+class Solution {
+public:
+    int findMaxForm(vector<string>& strs, int m, int n) {
+        int dp[m + 1][n + 1];
+        memset(dp, 0, sizeof(dp));
+
+        for (auto& s: strs) {
+            int zeros = 0;
+            int ones = 0;
+            for (auto& c: s) {
+                if (c == '1') ones++;
+                else zeros++;
+            }
+
+            for (int z = m; z >= zeros; --z) {
+                for (int o = n; o >= ones; --o) {
+                    dp[z][o] = max(dp[z][o], 1 + dp[z - zeros][o - ones]);
+                }
+            }
+        }
+        return dp[m][n];
+    }
+};
