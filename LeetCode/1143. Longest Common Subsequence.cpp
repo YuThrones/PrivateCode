@@ -1,3 +1,6 @@
+很经典的从递归改动态规划然后进行空间压缩的练习
+最快答案还用了位运算，
+
 #include<string>
 #include<memory.h>
 #include<iostream>
@@ -82,9 +85,11 @@ public:
         int m = X.size() , n = Y.size();
         if (m == 0 || n == 0) return 0;
         int w = (m + 31) >> 5;
+        // 256应该是ascii码的数量，w取较长的是为了避免后面不够用？
         std::uint32_t S[256][w];
         std::memset(S, 0, sizeof(std::uint32_t) * 256 * w);
         std::int32_t set = 1;
+        // 把在S[X[i]][j]中记录j位置是X[i]字符
         for (int i = 0, j = 0; i < m; ++i) {
             S[X[i]][j] |= set;
             set <<= 1;
@@ -93,10 +98,14 @@ public:
         std::uint32_t L[w];
         std::memset(L, 0, sizeof(std::uint32_t) * w);
         for (int i = 0; i < n; ++i) {
+            // 处理进位？
             std::uint32_t b1 = 1;
+            // 处理借位？
             std::uint32_t b2 = 0;
             for (int j = 0; j < w; ++j) {
+                // 如果X[i]跟Y[i]相同，会记录到U里面
                 std::uint32_t U  = L[j] | S[Y[i]][j];
+                // 拿到首位
                 std::uint32_t c  = L[j] >> 31;
                 std::uint32_t V  = U - (L[j] << 1 | b1+b2);
                 b1 = c;
@@ -105,6 +114,7 @@ public:
             }
         }      
         int res = 0;
+        // L数组中所有的1的数量之和就是答案，但是why？
         for (int i = 0; i < w; ++i)
             for (; L[i]; ++res)
                 L[i] &= L[i] - 1;
