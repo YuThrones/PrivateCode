@@ -1,27 +1,23 @@
-// 一眼大根堆维护数据结构，O(nlogn)复杂度解决
+// 这题本质上分析完其实就是把石头分两组，让他们的和最小，这样相互碰撞抵消之后能剩下的最小
+// 也就转化成一个01背包问题，求累加和sum一半的背包容量的最大价值
 
 #include<vector>
-#include<queue>
-#include<cmath>
+#include<numeric>
 using namespace std;
 
 class Solution {
 public:
-    int lastStoneWeight(vector<int>& stones) {
-        priority_queue<int> pQueue(stones.begin(), stones.end());
-        for (auto& i: stones) {
-            pQueue.push(i);
-        }
-        while(pQueue.size() > 1) {
-            int a = pQueue.top();
-            pQueue.pop();
-            int b = pQueue.top();
-            pQueue.pop();
-            if (a != b) {
-                pQueue.push(a - b);
+    int lastStoneWeightII(vector<int>& stones) {
+        int sum = accumulate(stones.begin(), stones.end(), 0);
+        
+        int target = sum / 2;
+        vector<int> dp(target + 1, 0);
+        for (auto& num: stones) {
+            for (int i = target; i >= num; --i) {
+                dp[i] = max(dp[i], dp[i - num] + num);
             }
         }
-        if (pQueue.empty()) return 0;
-        return pQueue.top();
+
+        return sum - dp[target] * 2;
     }
 };
