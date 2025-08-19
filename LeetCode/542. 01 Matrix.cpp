@@ -1,6 +1,50 @@
 class Solution {
 public:
     vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+        int m = mat.size();
+        int n = mat[0].size();
+        vector<vector<int>> ans(m, vector<int>(n, 0));
+        queue<pair<int, int>> q;
+        for (int x = 0; x < m; x++) {
+            for (int y = 0; y < n; y++) {
+                if (mat[x][y] == 0) {
+                    q.push({x, y});
+                }
+            }
+        }
+        int dist = 0;
+        while(!q.empty()){
+            int size = q.size();
+            for(int i = 0; i < size; i++){                
+                int x = q.front().first;
+                int y = q.front().second;
+                q.pop();
+                if(x-1 >= 0 && mat[x-1][y] == 1 && ans[x-1][y] ==0){
+                    q.push({x-1, y});
+                    ans[x-1][y] = dist+1;
+                }
+                if(x+1 <m && mat[x+1][y] == 1 && ans[x+1][y] ==0){
+                    q.push({x+1, y});
+                    ans[x+1][y] = dist+1;
+                }
+                if(y-1 >= 0 && mat[x][y-1] == 1 && ans[x][y-1] ==0){
+                    q.push({x, y-1});
+                    ans[x][y-1] = dist+1;
+                }
+                if(y+1 <n && mat[x][y+1] == 1 && ans[x][y+1] ==0){
+                    q.push({x, y+1});
+                    ans[x][y+1] = dist+1;
+                }
+            }
+            dist++;
+        }
+        return ans;
+    }
+};
+
+class Solution {
+public:
+    vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
         vector<vector<int>> ans(mat);
         queue<vector<int>> q;
 
