@@ -1,37 +1,42 @@
+最佳答案需要剪枝，先确定第三个数，然后尝试第二个数，并且找到所有满足的第一个数，用剪枝加速
+
 class Solution {
 public:
-    int numRookCaptures(vector<vector<char>>& board) {
-        int ans = 0;
-        vector<vector<int>> dir {
-            {-1, 0}, {1, 0},
-            {0, -1}, {0, 1},
-        };
-        for (int i = 0; i < board.size(); ++i) {
-            for (int j = 0; j < board[0].size(); ++j) {
-                if (board[i][j] == 'R') {
-
-                    for (auto& d: dir) {
-                        int x = i + d[0];
-                        int y = j + d[1];
-                        while (x >= 0 
-                                && x < board.size() 
-                                && y >= 0 
-                                && y < board[0].size()) {
-                            if (board[x][y] == 'p') {
-                                ++ans;
-                                break;
-                            }
-                            if (board[x][y] == 'B') {
-                                break;
-                            }
-                            x += d[0];
-                            y += d[1];
-                        }
-
-                    }
-                    break;
+    int triangleNumber(vector<int>& nums) {
+        int cnt = 0;
+        sort(nums.begin(), nums.end());
+        for(int right = 2; right < nums.size(); right++){ // left - mid - right
+            int left = 0, mid = right-1;
+            while(left < mid){
+                if(nums[left] + nums[mid] > nums[right]){ // try a smaller sum
+                    cnt += mid - left; // add all element left~mid-1
+                    mid--; 
                 }
+                else{ // try a bigger sum
+                    left++;
+                }
+            }
+        }
+        return cnt;
+    }
+};
 
+
+class Solution {
+public:
+    int triangleNumber(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        int ans = 0;
+        int n = nums.size();
+        for(int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                for (int k = j + 1; k < n; ++k) {
+                    // cout << nums[i] << " " << nums[j] << " " << nums[k] << endl;
+                    if (nums[i] + nums[j] <= nums[k]) {
+                        break;
+                    }
+                    ++ans;
+                }
             }
         }
         return ans;
