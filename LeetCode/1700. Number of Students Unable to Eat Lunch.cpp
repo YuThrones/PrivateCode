@@ -6,7 +6,6 @@ public:
             ++count[s];
         }
         for (int i = 0; i < sandwiches.size(); ++i) {
-            cout << count[0] << count[1] << endl;
             if (count[sandwiches[i]] <= 0) {
                 return count[0] + count[1];        
             }
