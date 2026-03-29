@@ -12,7 +12,10 @@
 class Solution {
 public:
     TreeNode* insertIntoBST(TreeNode* root, int val) {
-        if (val < root->val) {
+        if (!root) {
+            root = new TreeNode(val);
+        }
+        else if (val < root->val) {
             if (!root->left) {
                 root->left = new TreeNode(val);
             }
